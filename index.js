@@ -1,10 +1,12 @@
 import express from "express"
 import userRoute from "./routes/user.route.js"
+import {authenticationMiddleware} from  "./middleware/auth.middleware.js"
 
 const app = express()
 const PORT = process.env.PORT ?? 8000
 
 app.use(express.json())
+app.use(authenticationMiddleware)
 
 app.use("/user", userRoute)
 

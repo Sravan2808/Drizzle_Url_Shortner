@@ -13,3 +13,12 @@ export function createUserToken(payload) {
   const token = jwt.sign(payload, JWT_SECRET);
   return token;
 }
+
+export function validateUserToken(token) {
+  try {
+    const payload = jwt.verify(token, JWT_SECRET);
+    return payload; 
+  } catch (error) {
+    return null;
+  }
+}
