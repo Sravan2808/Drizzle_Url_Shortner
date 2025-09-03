@@ -1,5 +1,5 @@
 import express from "express"
-import {userRoute} from "./routes/user.route.js"
+import userRoute from "./routes/user.route.js"
 
 const app = express()
 const PORT = process.env.PORT ?? 8000
