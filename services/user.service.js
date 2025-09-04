@@ -59,11 +59,30 @@ export async function getUrlByCode(code) {
 }
 
 export async function getAllUserCodes(userId) {
-  const codes = await db.select().from(urlsTable).where(eq(urlsTable.userId,userId))
+  const codes = await db
+    .select()
+    .from(urlsTable)
+    .where(eq(urlsTable.userId, userId));
   return codes;
 }
 
-export async function deleteId(id,userId){
- const result =  await db.delete(urlsTable).where(and(eq(urlsTable.id,id),eq(urlsTable.userId,userId)))
- return result
+export async function deleteId(id, userId) {
+  const result = await db
+    .delete(urlsTable)
+    .where(and(eq(urlsTable.id, id), eq(urlsTable.userId, userId)));
+  return result;
+}
+
+export async function updateUrl(id, shortCode, url, userId) {
+  const [result] = await db
+    .update(urlsTable)
+    .set({ shortCode, targetURL: url, updatedAt: new Date() })
+    .where(and(eq(urlsTable.id, id), eq(urlsTable.userId, userId)))
+    .returning({
+      id: urlsTable.id,
+      shortCode: urlsTable.shortCode,
+      targetURL: urlsTable.targetURL,
+      updatedAt: urlsTable.updatedAt,
+    });
+  return result;
 }
