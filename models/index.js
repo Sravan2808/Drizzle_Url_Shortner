@@ -1,2 +1,2 @@
-export { usersTable } from "./user.model";
-export { urlsTable } from "./url.model";
+export { usersTable } from "./user.model.js";
+export { urlsTable } from "./url.model.js";
