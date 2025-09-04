@@ -2,7 +2,7 @@ import express from "express";
 import { shortenPostRequestBodySchema } from "../validation/request.validation.js";
 import { nanoid } from "nanoid";
 import { ensureAuthenticated } from "../middleware/auth.middleware.js";
-import { createUrl, getAllUserCodes, getUrlByCode } from "../services/user.service.js";
+import { createUrl, deleteId, getAllUserCodes, getUrlByCode } from "../services/user.service.js";
 
 const router = express.Router();
 
@@ -31,6 +31,12 @@ router.post("/shorten", ensureAuthenticated, async (req, res) => {
 router.get("/codes",ensureAuthenticated,async (req,res)=>{
     const codes = await getAllUserCodes(req.user.id);
     return res.json({codes})
+})
+
+router.delete("/:id",ensureAuthenticated,async(req,res)=>{
+    const id = req.params.id
+    const result = await deleteId(id,req.user.id)
+    return res.status(200).json({message:"Deleted successfully",result})
 })
 router.get('/:shortCode',async(req,res)=>{
     const code = req.params.shortCode;
