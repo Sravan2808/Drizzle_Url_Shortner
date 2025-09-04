@@ -10,8 +10,8 @@ const PORT = process.env.PORT ?? 8000
 app.use(express.json())
 app.use(authenticationMiddleware)
 
-app.use(urlRouter)
 app.use("/user", userRoute)
+app.use(urlRouter)
 
 app.get("/",(req,res)=>{
     res.status(200).json({message:`server is running at port ${PORT}`})
