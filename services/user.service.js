@@ -57,3 +57,8 @@ export async function getUrlByCode(code) {
     .where(eq(urlsTable.shortCode, code));
   return result;
 }
+
+export async function getAllUserCodes(userId) {
+  const codes = await db.select().from(urlsTable).where(eq(urlsTable.userId,userId))
+  return codes;
+}
